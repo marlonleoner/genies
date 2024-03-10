@@ -28,3 +28,12 @@ export interface ICreatePlayer extends IBasicPlayer {}
 export interface IUpdatePlayer extends IBasicPlayer {
     id: string;
 }
+
+// Match
+export interface IMatchRequest {
+    team1: any;
+    team2: any;
+    bestOf: number;
+    startTime?: number | null;
+    active?: boolean | null;
+}

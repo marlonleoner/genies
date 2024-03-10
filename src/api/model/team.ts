@@ -9,6 +9,7 @@ import {
 
 import { generateCustomId } from '../../util/cuid';
 import { IBasicTeam } from '../types/request';
+import { Match } from './match';
 import { Player } from './player';
 
 @Entity('tb_teams')
@@ -30,6 +31,9 @@ export class Team {
 
     @OneToMany(() => Player, (player) => player.team)
     players!: Player[];
+
+    @OneToMany(() => Match, (match) => [match.team1, match.team2])
+    matches!: Match[];
 
     @CreateDateColumn({ select: false, default: () => 'CURRENT_TIMESTAMP' })
     createdAt!: Date;

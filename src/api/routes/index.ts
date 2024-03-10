@@ -1,5 +1,6 @@
 import { Response, Router } from 'express';
 
+import matchRouter from './match.routes';
 import playerRouter from './player.routes';
 import teamRouter from './team.routes';
 
@@ -10,5 +11,6 @@ router.get(
 );
 router.use('/teams', teamRouter);
 router.use('/players', playerRouter);
+router.use('/matches', matchRouter);
 
 export { router };
