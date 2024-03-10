@@ -1,6 +1,6 @@
 import { Team } from '../model/team';
 import { TeamRepository } from '../repository/team.repository';
-import { CreateTeamSchema } from '../schema/team';
+import { CreateTeamSchema } from '../schema/team.schema';
 import { ICreateTeam } from '../types/request';
 
 export class TeamService {
