@@ -2,6 +2,7 @@ import { Team } from '../model/team';
 import { TeamRepository } from '../repository/team.repository';
 import { CreateTeamSchema, UpdateTeamSchema } from '../schema/team.schema';
 import { ICreateTeam, IUpdateTeam } from '../types/request';
+import { FileService } from './file.service';
 
 export class TeamService {
     private repository: TeamRepository = new TeamRepository();
@@ -17,11 +18,13 @@ export class TeamService {
     create = async (data: ICreateTeam) => {
         const { name, tag, country, logo } = CreateTeamSchema.parse(data);
 
+        const logoFileName = await FileService.saveImage(logo);
+
         const team = Team.create({
             name,
             tag: tag,
             country: country,
-            logo,
+            logo: logoFileName,
         });
 
         return this.repository.save(team);
@@ -32,11 +35,13 @@ export class TeamService {
 
         const team = await this.repository.findOneOrError(id);
 
+        const logoFileName = await FileService.saveImage(logo, team.logo);
+
         team.set({
             name,
             tag: tag || null,
             country: country || null,
-            logo,
+            logo: logoFileName,
         });
 
         return this.repository.save(team);
