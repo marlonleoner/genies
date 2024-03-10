@@ -2,12 +2,14 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     PrimaryColumn,
     UpdateDateColumn,
 } from 'typeorm';
 
 import { generateCustomId } from '../../util/generate-id';
 import { IBasicTeam } from '../types/request';
+import { Player } from './player';
 
 @Entity('tb_teams')
 export class Team {
@@ -25,6 +27,9 @@ export class Team {
 
     @Column({ type: 'varchar', nullable: true })
     country?: string | null;
+
+    @OneToMany(() => Player, (player) => player.team)
+    players!: Player[];
 
     @CreateDateColumn({ select: false, default: () => 'CURRENT_TIMESTAMP' })
     createdAt!: Date;

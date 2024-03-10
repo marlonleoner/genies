@@ -8,6 +8,7 @@ const CreatePlayerSchema = object({
     avatar: string().optional(),
     country: string().optional(),
     logo: string().optional(),
+    teamId: string().optional(),
 });
 
 const UpdatePlayerSchema = object({
@@ -19,6 +20,7 @@ const UpdatePlayerSchema = object({
     avatar: string().optional(),
     country: string().optional(),
     logo: string().optional(),
+    teamId: string().optional(),
 });
 
 export { CreatePlayerSchema, UpdatePlayerSchema };

@@ -6,9 +6,12 @@ import {
 } from '../schema/player.schema';
 import { ICreatePlayer, IUpdatePlayer } from '../types/request';
 import { FileService } from './file.service';
+import { TeamService } from './team.service';
 
 export class PlayerService {
     private repository: PlayerRepository = new PlayerRepository();
+
+    private teamService: TeamService = new TeamService();
 
     getAll = async () => {
         return this.repository.findAll();
@@ -19,8 +22,17 @@ export class PlayerService {
     };
 
     create = async (data: ICreatePlayer) => {
-        const { nickname, steamId, firstName, lastName, avatar, country } =
-            CreatePlayerSchema.parse(data);
+        const {
+            nickname,
+            steamId,
+            firstName,
+            lastName,
+            avatar,
+            country,
+            teamId,
+        } = CreatePlayerSchema.parse(data);
+
+        const team = teamId ? await this.teamService.getOne(teamId) : null;
 
         const avatarFileName = await FileService.saveImage(avatar);
 
@@ -31,16 +43,27 @@ export class PlayerService {
             steamId,
             country,
             avatar: avatarFileName,
+            team,
         });
 
         return this.repository.save(player);
     };
 
     update = async (data: IUpdatePlayer) => {
-        const { id, nickname, steamId, firstName, lastName, avatar, country } =
-            UpdatePlayerSchema.parse(data);
+        const {
+            id,
+            nickname,
+            steamId,
+            firstName,
+            lastName,
+            avatar,
+            country,
+            teamId,
+        } = UpdatePlayerSchema.parse(data);
 
         const player = await this.repository.findOneOrError(id);
+
+        const team = teamId ? await this.teamService.getOne(teamId) : null;
 
         const avatarFileName = await FileService.saveImage(
             avatar,
@@ -54,6 +77,7 @@ export class PlayerService {
             lastName: lastName || null,
             country: country || null,
             avatar: avatarFileName,
+            team,
         });
 
         return this.repository.save(player);

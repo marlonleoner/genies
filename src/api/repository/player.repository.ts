@@ -7,12 +7,21 @@ export class PlayerRepository {
     private db: Repository<Player> = DB.getRepository(Player);
 
     findAll = async () => {
-        return await this.db.find();
+        return await this.db
+            .createQueryBuilder('player')
+            .leftJoinAndSelect('player.team', 'team')
+            .getMany();
     };
 
     findOneOrError = async (playerId: string) => {
-        const player = await this.db.findOneBy({ id: playerId });
+        const player = await this.db
+            .createQueryBuilder('player')
+            .leftJoinAndSelect('player.team', 'team')
+            .where('player.id = :playerId')
+            .setParameters({ playerId })
+            .getOne();
         if (!player) throw new Error('Player not found');
+
         return player;
     };
 

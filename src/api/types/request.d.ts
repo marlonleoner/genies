@@ -20,6 +20,7 @@ export interface IBasicPlayer {
     lastName?: string | null;
     country?: string | null;
     avatar?: string | null;
+    team?: any;
 }
 
 export interface ICreatePlayer extends IBasicPlayer {}

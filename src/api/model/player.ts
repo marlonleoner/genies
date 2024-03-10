@@ -2,12 +2,15 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
+    ManyToOne,
     PrimaryColumn,
     UpdateDateColumn,
 } from 'typeorm';
 
 import { generateCustomId } from '../../util/generate-id';
 import { IBasicPlayer } from '../types/request';
+import { Team } from './team';
 
 @Entity('tb_players')
 export class Player {
@@ -32,6 +35,14 @@ export class Player {
     @Column({ type: 'varchar', nullable: true })
     country?: string | null;
 
+    @ManyToOne(() => Team, (team) => team.players, {
+        nullable: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    })
+    @JoinColumn()
+    team?: Team | null;
+
     @CreateDateColumn({ select: false, default: () => 'CURRENT_TIMESTAMP' })
     createdAt!: Date;
 
@@ -45,6 +56,7 @@ export class Player {
         lastName,
         avatar,
         country,
+        team,
     }: IBasicPlayer): Player {
         const player = new Player();
         player.id = generateCustomId();
@@ -54,6 +66,7 @@ export class Player {
         player.lastName = lastName;
         player.avatar = avatar;
         player.country = country;
+        player.team = team;
 
         return player;
     }
@@ -65,6 +78,7 @@ export class Player {
         lastName,
         avatar,
         country,
+        team,
     }: IBasicPlayer): void {
         this.nickname = nickname;
         this.steamId = steamId;
@@ -72,6 +86,7 @@ export class Player {
         this.lastName = lastName;
         this.avatar = avatar;
         this.country = country;
+        this.team = team;
         this.updatedAt = new Date();
     }
 }
