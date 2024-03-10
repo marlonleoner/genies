@@ -18,4 +18,8 @@ export class TeamRepository {
     save = async (team: Team): Promise<Team> => {
         return await this.db.save(team);
     };
+
+    delete = async (teamId: string): Promise<void> => {
+        await this.db.delete(teamId);
+    };
 }

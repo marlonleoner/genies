@@ -46,4 +46,10 @@ export class TeamService {
 
         return this.repository.save(team);
     };
+
+    delete = async (teamId: string) => {
+        const team = await this.repository.findOneOrError(teamId);
+        FileService.removeImage(team.logo);
+        await this.repository.delete(teamId);
+    };
 }

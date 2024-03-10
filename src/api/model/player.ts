@@ -8,7 +8,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-import { generateCustomId } from '../../util/generate-id';
+import { generateCustomId } from '../../util/cuid';
 import { IBasicPlayer } from '../types/request';
 import { Team } from './team';
 
@@ -38,7 +38,7 @@ export class Player {
     @ManyToOne(() => Team, (team) => team.players, {
         nullable: true,
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     })
     @JoinColumn()
     team?: Team | null;

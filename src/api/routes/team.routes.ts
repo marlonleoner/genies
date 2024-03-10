@@ -9,5 +9,6 @@ teamRouter.get('/', teamController.getAll);
 teamRouter.get('/:teamId', teamController.getOne);
 teamRouter.post('/', teamController.create);
 teamRouter.put('/', teamController.update);
+teamRouter.delete('/:teamId', teamController.delete);
 
 export default teamRouter;

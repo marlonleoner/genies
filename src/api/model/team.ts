@@ -7,7 +7,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-import { generateCustomId } from '../../util/generate-id';
+import { generateCustomId } from '../../util/cuid';
 import { IBasicTeam } from '../types/request';
 import { Player } from './player';
 

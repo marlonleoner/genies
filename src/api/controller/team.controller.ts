@@ -45,4 +45,18 @@ export class TeamController {
             return next(error);
         }
     };
+
+    delete = async (
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const { teamId } = request.params;
+            await this.teamService.delete(teamId);
+            return response.end();
+        } catch (error) {
+            return next(error);
+        }
+    };
 }

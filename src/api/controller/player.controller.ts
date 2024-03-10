@@ -45,4 +45,18 @@ export class PlayerController {
             return next(error);
         }
     };
+
+    delete = async (
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const { playerId } = request.params;
+            const player = await this.playerService.delete(playerId);
+            return response.json(player);
+        } catch (error) {
+            return next(error);
+        }
+    };
 }

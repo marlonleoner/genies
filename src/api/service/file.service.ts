@@ -2,7 +2,7 @@ import { existsSync, promises, unlinkSync } from 'fs';
 import path from 'path';
 
 import { imagesFolder } from '../../util/constants';
-import { generateCustomId } from '../../util/generate-id';
+import { generateCustomId } from '../../util/cuid';
 
 export class FileService {
     private static mimeTypes: { [key: string]: string } = {
@@ -40,5 +40,9 @@ export class FileService {
         });
 
         return imageFileName;
+    };
+
+    static removeImage = (file?: string | null): void => {
+        if (file) FileService.remove(path.join(imagesFolder, file));
     };
 }

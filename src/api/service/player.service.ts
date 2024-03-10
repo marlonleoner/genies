@@ -82,4 +82,10 @@ export class PlayerService {
 
         return this.repository.save(player);
     };
+
+    delete = async (playerId: string) => {
+        const player = await this.repository.findOneOrError(playerId);
+        FileService.removeImage(player.avatar);
+        await this.repository.delete(playerId);
+    };
 }

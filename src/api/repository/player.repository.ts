@@ -28,4 +28,8 @@ export class PlayerRepository {
     save = async (player: Player): Promise<Player> => {
         return await this.db.save(player);
     };
+
+    delete = async (playerId: string) => {
+        await this.db.delete(playerId);
+    };
 }

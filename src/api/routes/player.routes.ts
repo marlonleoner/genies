@@ -9,5 +9,6 @@ playerRouter.get('/', playerController.getAll);
 playerRouter.get('/:playerId', playerController.getOne);
 playerRouter.post('/', playerController.create);
 playerRouter.put('/', playerController.update);
+playerRouter.delete('/:playerId', playerController.delete);
 
 export default playerRouter;
