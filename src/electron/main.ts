@@ -1,5 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 
+import '../api/';
+
 class Main {
     private window!: BrowserWindow;
 
@@ -26,11 +28,11 @@ class Main {
             height: 600,
             width: 800,
             title: 'Genies',
-            frame: false,
+            frame: true,
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,
-                devTools: false,
+                devTools: true,
             },
         });
 
