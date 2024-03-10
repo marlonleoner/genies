@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 
 import { databaseFile } from '../../../util/constants';
 
+import { Player } from '../../model/player';
 import { Team } from '../../model/team';
 
 export const DB = new DataSource({
@@ -9,7 +10,7 @@ export const DB = new DataSource({
     database: databaseFile,
     synchronize: true,
     logging: true,
-    entities: [Team],
+    entities: [Team, Player],
 });
 
 DB.initialize();

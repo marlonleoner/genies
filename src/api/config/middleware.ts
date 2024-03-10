@@ -1,5 +1,6 @@
+import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
-import { Application, json } from 'express';
+import { Application } from 'express';
 
 const corsOptions: CorsOptions = {
     origin: '*',
@@ -7,7 +8,7 @@ const corsOptions: CorsOptions = {
 
 const configMiddleware = (app: Application): void => {
     app.use(cors(corsOptions));
-    app.use(json());
+    app.use(bodyParser.json({ limit: '10mb' }));
 };
 
 export default configMiddleware;
