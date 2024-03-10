@@ -1,6 +1,6 @@
-import { existsSync, mkdirSync } from 'original-fs';
+import { existsSync, mkdirSync } from 'fs';
 
-import { genieFolder, logsFolder } from '../../util/constants';
+import { databaseFolder, genieFolder, logsFolder } from '../../util/constants';
 import { logger } from './logger';
 
 const verifyAndCreateFolder = (path: string): void => {
@@ -14,6 +14,7 @@ const verifyAndCreateFolder = (path: string): void => {
 const configFolders = (): void => {
     verifyAndCreateFolder(genieFolder);
     verifyAndCreateFolder(logsFolder);
+    verifyAndCreateFolder(databaseFolder);
 };
 
 export default configFolders;

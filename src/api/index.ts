@@ -12,7 +12,7 @@ import createServer from './config/server';
 const PORT = 6779;
 const server: Server = createServer(express());
 server.listen(PORT, () => {
-    const message = `Server running on port ${PORT}`;
+    const message = `🚀 Server running on port ${PORT}`;
     logger.info(message);
     console.log(message);
 });

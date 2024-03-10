@@ -2,11 +2,13 @@ import { Application } from 'express';
 import 'express-async-errors';
 import { Server } from 'http';
 
+import '../lib/database';
+
 import configErrorHandler from './error';
+import configFolders from './folder';
 import configMiddleware from './middleware';
 import configRoutes from './routes';
 import configSocket from './socket';
-import configFolders from './folder';
 
 const createServer = (app: Application): Server => {
     configFolders();
