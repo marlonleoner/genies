@@ -8,5 +8,6 @@ const teamRouter = Router();
 teamRouter.get('/', teamController.getAll);
 teamRouter.get('/:teamId', teamController.getOne);
 teamRouter.post('/', teamController.create);
+teamRouter.put('/', teamController.update);
 
 export default teamRouter;

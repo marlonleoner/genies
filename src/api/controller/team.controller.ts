@@ -32,4 +32,17 @@ export class TeamController {
         const team = await this.teamService.create(request.body);
         return response.json(team);
     };
+
+    update = async (
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const team = await this.teamService.update(request.body);
+            return response.json(team);
+        } catch (error) {
+            return next(error);
+        }
+    };
 }
