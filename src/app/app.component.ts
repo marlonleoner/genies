@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ElectronService } from './service/electron.service';
 
 @Component({
     selector: 'genies-root',
@@ -10,4 +11,10 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
     title = 'project';
+
+    constructor(private electron: ElectronService) {}
+
+    open() {
+        this.electron.open();
+    }
 }

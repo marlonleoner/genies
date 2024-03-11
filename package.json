@@ -10,6 +10,7 @@
         "dev:api": "nodemon --watch ./src/api -e ts --exec \"ts-node --project tsconfig.api.json ./src/api/index.ts\"",
         "dev:app": "tsc --preserveWatchOutput -p tsconfig.api.json --watch",
         "dev:front": "ng build --watch --configuration development",
+        "pre": "ng build --base-href ./ && tsc -p tsconfig.api.json && electron .",
         "start": "ng serve",
         "build": "ng build"
     },

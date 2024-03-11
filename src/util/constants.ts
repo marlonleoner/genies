@@ -17,6 +17,7 @@ const databaseFile = path.join(databaseFolder, 'GeniesHM.db');
 const frontFolder = isDev
     ? path.join(__dirname, '..', '..', 'dist', 'genies', 'browser')
     : path.join(__dirname, '..', '..', 'genies', 'browser');
+const indexFrontFile = path.join(frontFolder, 'index.html');
 
 export {
     databaseFile,
@@ -24,6 +25,7 @@ export {
     frontFolder,
     genieFolder,
     imagesFolder,
+    indexFrontFile,
     logsFolder,
     publicFolder,
 };
