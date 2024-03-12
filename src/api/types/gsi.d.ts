@@ -1,35 +1,12 @@
-type GSIRoundWinsType =
-    | 't_win_elimination'
-    | 't_win_bomb'
-    | 'ct_win_elimination'
-    | 'ct_win_time'
-    | 'ct_win_defuse';
-
-type GSIGrenadesType = 'inferno' | 'smoke' | 'flashbang' | 'frag';
-
-type GSIBombState =
-    | 'carried'
-    | 'dropped'
-    | 'plating'
-    | 'planted'
-    | 'defusing'
-    | 'defused';
-
-type GSIRoundPhase = 'freezetime' | 'live' | 'over';
-
-type GSIPhaseCountdownsPhase =
-    | 'freezetime'
-    | 'live'
-    | 'bomb'
-    | 'defuse'
-    | 'over'
-    | 'timeout_t'
-    | 'timeout_ct'
-    | 'paused';
-
-type GSISideTeam = 'T' | 'CT';
-
-type GSIActivity = 'playing';
+import {
+    ActivityPlayer,
+    BombState,
+    GrenadeType,
+    MapPhase,
+    PhaseCountdownsPhase,
+    RoundWinType,
+    WeaponType
+} from './common';
 
 type GSIWeaponKeys =
     | 'weapon_0'
@@ -41,26 +18,15 @@ type GSIWeaponKeys =
     | 'weapon_6'
     | 'weapon_7';
 
-type GSIWeaponType =
-    | 'Knife'
-    | 'Pistol'
-    | 'Grenade'
-    | 'Rifle'
-    | 'C4'
-    | 'SniperRifle'
-    | 'Submachine Gun';
-
-type GSIWeaponState = 'active' | 'holstered';
-
 interface GSIRaw {
     provider: GSIProvider;
     map: GSIMap;
+    bomb?: GSIBomb;
     round?: GSIRound;
     phase_countdowns: GSIPhaseCountdowns;
-    player: GSIPlayer;
+    player: GSIObservedPlayer;
     allplayers: GSIAllPlayers;
     grenades: GSIGrenades;
-    bomb: GSIBomb;
 }
 
 interface GSIProvider {
@@ -74,7 +40,7 @@ interface GSIProvider {
 interface GSIMap {
     mode: string;
     name: string;
-    phase: string;
+    phase: MapPhase;
     round: number;
     team_ct: GSITeam;
     team_t: GSITeam;
@@ -91,38 +57,42 @@ interface GSITeam {
 }
 
 interface GSIRoundWins {
-    [key: string]: GSIRoundWinsType;
+    [key: string]: RoundWinType;
 }
 
 interface GSIRound {
-    phase: GSIRoundPhase;
+    phase: RoundPhase;
     bomb: GSIBombState;
-    win_team: GSISideTeam;
+    win_team: SideTeam;
 }
 
 interface GSIPhaseCountdowns {
-    phase: GSIRoundPhase;
+    phase: PhaseCountdownsPhase;
     phase_ends_in: string;
 }
 
 interface GSIPlayer {
-    steamid: string;
     name: string;
+    team: SideTeam;
     observer_slot: number;
-    team: GSISideTeam;
-    activity: GSIActivity;
     state: GSIPlayerState;
     match_stats: GSIPlayerStats;
     weapons: GSIWeapons;
-    spectarget: string;
     position: string;
     forward: string;
+}
+
+interface GSIObservedPlayer extends GSIPlayer {
+    steamid: string;
+    activity: ActivityPlayer;
+    spectarget: string;
 }
 
 interface GSIPlayerState {
     health: number;
     armor: number;
     helmet: boolean;
+    defusekit?: boolean;
     flashed: number;
     smoked: number;
     burning: number;
@@ -142,28 +112,21 @@ interface GSIPlayerStats {
 }
 
 interface GSIWeapons {
-    [key: GSIWeaponKeys]: {
-        name: string;
-        paintkit: string;
-        type: GSIWeaponType;
-        ammo_clip: number;
-        ammo_clip_max: number;
-        ammo_reserve: number;
-        state: GSIWeaponState;
-    };
+    [key: GSIWeaponKeys]: GSIWeapon;
+}
+
+interface GSIWeapon {
+    name: string;
+    paintkit: string;
+    type: WeaponType;
+    ammo_clip: number;
+    ammo_clip_max: number;
+    ammo_reserve: number;
+    state: WeaponState;
 }
 
 interface GSIAllPlayers {
-    [key: string]: {
-        name: string;
-        observer_slot: number;
-        state: GSIPlayerState;
-        match_stats: GSIPlayerStats;
-        team: GSISideTeam;
-        weapons: GSIWeapons;
-        position: string;
-        forward: string;
-    };
+    [key: string]: GSIPlayer;
 }
 
 interface GSIGrenades {
@@ -176,15 +139,37 @@ interface GSIGrenades {
         flames: {
             [key: string]: string;
         };
-        type: GSIGrenadesType;
+        type: GrenadeType;
     };
 }
 
 interface GSIBomb {
-    state: GSIBombState;
+    state: BombState;
     position: string;
     player: string;
     countdown: string;
 }
 
-export { IRaw };
+export {
+    GSIAllPlayers,
+    GSIBomb,
+    GSIBombState,
+    GSIGrenades,
+    GSIGrenadesType,
+    GSIMap,
+    GSIObservedPlayer,
+    GSIPhaseCountdowns,
+    GSIPlayer,
+    GSIPlayerState,
+    GSIPlayerStats,
+    GSIProvider,
+    GSIRaw,
+    GSIRound,
+    GSIRoundPhase,
+    GSIRoundWins,
+    GSIRoundWinsType,
+    GSITeam,
+    GSIWeapon,
+    GSIWeaponKeys,
+    GSIWeapons
+};
