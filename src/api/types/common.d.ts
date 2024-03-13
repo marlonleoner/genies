@@ -8,7 +8,7 @@ export type GrenadeType = 'inferno' | 'smoke' | 'flashbang' | 'frag';
 
 export type BombState = 'carried' | 'dropped' | 'planting' | 'planted' | 'defusing' | 'defused' | 'exploded';
 
-export type RoundPhase = 'freezetime' | 'live' | 'over';
+export type RoundPhase = 'warmup' | 'freezetime' | 'live' | 'over';
 
 export type PhaseCountdownsPhase =
     | 'freezetime'

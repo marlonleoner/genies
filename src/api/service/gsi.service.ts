@@ -1,8 +1,9 @@
+import { clear } from 'console';
 import { GSIEvents } from '../../util/constants';
 import { logger } from '../config/logger';
 import { GlobalEmitter } from '../lib/emitter';
 import { Team } from '../model/team';
-import { BombSites, RoundWinType, SideTeam } from '../types/common';
+import { BombSites, RoundPhase, RoundWinType, SideTeam } from '../types/common';
 import {
     IBomb,
     IData,
@@ -69,6 +70,16 @@ export class GsiService {
      *
      */
     private team2?: Team;
+    /**
+     *
+     */
+    private roundsDamage: {
+        round: number;
+        players: {
+            steamId: string;
+            damage: number;
+        }[];
+    }[] = [];
 
     private parseMap = (map: GSIMap): IMap => {
         return {
@@ -296,6 +307,38 @@ export class GsiService {
         players
     });
 
+    private parseDamages = (roundNumber: number, roundPhase: RoundPhase, players: IPlayer[]) => {
+        if ((roundNumber === 1 && roundPhase === 'freezetime') || roundPhase === 'warmup') {
+            this.roundsDamage = [];
+        }
+
+        let currentRoundDamage = this.roundsDamage.find((damage) => damage.round === roundNumber);
+        if (!currentRoundDamage) {
+            currentRoundDamage = {
+                round: roundNumber,
+                players: []
+            };
+
+            this.roundsDamage.push(currentRoundDamage);
+        }
+
+        currentRoundDamage.players = players.map(({ steamId, state }) => ({
+            steamId: steamId,
+            damage: state.roundDamage
+        }));
+
+        const roundDamage = this.roundsDamage.filter((d) => d.round < roundNumber);
+        players.forEach((player) => {
+            const playerRoundsDamage = roundDamage.map((d) => {
+                const prd = d.players.find((pd) => pd.steamId === player.steamId);
+                return prd ? prd.damage : 0;
+            });
+
+            const totalDamage = playerRoundsDamage.reduce((a, b) => a + b, 0);
+            player.stats.adr = Math.floor(totalDamage / (roundNumber - 1)) || 0;
+        });
+    };
+
     private parseRaw(raw: GSIRaw): IData {
         const { map, round, phase_countdowns, allplayers, player, bomb } = raw;
 
@@ -308,6 +351,8 @@ export class GsiService {
         const parsedRoundsHistory = this.parseRoundsHistory(parsedCurrentRound.number, map.round_wins);
 
         const players = this.parsePlayers(allplayers);
+
+        this.parseDamages(parsedCurrentRound.number, parsedCurrentRound.phase, players);
 
         const playerObserved = players.find(({ steamId }) => steamId === player.spectarget);
 
@@ -447,6 +492,7 @@ export class GsiService {
     };
 
     digest = (raw: GSIRaw) => {
+        clear();
         const data = this.parseRaw(raw);
         if (!this.last) this.last = data;
         this.current = data;
