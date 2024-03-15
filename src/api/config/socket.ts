@@ -1,11 +1,11 @@
 import { Application } from 'express';
 import { createServer as HttpServer, Server } from 'http';
-import { Server as SocketServer } from 'socket.io';
+import { ServerOptions, Server as SocketServer } from 'socket.io';
 import { GSIEvents, SocketEvents } from '../../util/constants';
 import { GlobalEmitter } from '../lib/emitter';
 import { logger } from './logger';
 
-const options = {
+const options: Partial<ServerOptions> = {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']

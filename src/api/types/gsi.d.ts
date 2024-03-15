@@ -24,7 +24,7 @@ interface GSIRaw {
     bomb?: GSIBomb;
     round?: GSIRound;
     phase_countdowns: GSIPhaseCountdowns;
-    player: GSIObservedPlayer;
+    player?: GSIObservedPlayer;
     allplayers: GSIAllPlayers;
     grenades: GSIGrenades;
 }

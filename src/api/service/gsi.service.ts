@@ -1,4 +1,3 @@
-import { clear } from 'console';
 import { GSIEvents } from '../../util/constants';
 import { logger } from '../config/logger';
 import { GlobalEmitter } from '../lib/emitter';
@@ -354,7 +353,7 @@ export class GsiService {
 
         this.parseDamages(parsedCurrentRound.number, parsedCurrentRound.phase, players);
 
-        const playerObserved = players.find(({ steamId }) => steamId === player.spectarget);
+        const playerObserved = players.find(({ steamId }) => steamId === player?.spectarget);
 
         const { team1, team2 } = this.parseTeams(map.team_ct, map.team_t, players);
 
@@ -492,7 +491,6 @@ export class GsiService {
     };
 
     digest = (raw: GSIRaw) => {
-        clear();
         const data = this.parseRaw(raw);
         if (!this.last) this.last = data;
         this.current = data;
