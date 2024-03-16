@@ -24,6 +24,7 @@
         "@angular/platform-browser": "^17.1.0",
         "@angular/platform-browser-dynamic": "^17.1.0",
         "@angular/router": "^17.1.0",
+        "@ngneat/query": "2.0.0-beta.11",
         "@paralleldrive/cuid2": "^2.2.2",
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",

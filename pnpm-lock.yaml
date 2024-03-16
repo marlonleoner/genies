@@ -29,6 +29,9 @@ dependencies:
   '@angular/router':
     specifier: ^17.1.0
     version: 17.2.4(@angular/common@17.2.4)(@angular/core@17.2.4)(@angular/platform-browser@17.2.4)(rxjs@7.8.1)
+  '@ngneat/query':
+    specifier: 2.0.0-beta.11
+    version: 2.0.0-beta.11(@angular/core@17.2.4)(@tanstack/query-core@5.28.4)
   '@paralleldrive/cuid2':
     specifier: ^2.2.2
     version: 2.2.2
@@ -2433,6 +2436,17 @@ packages:
       cross-spawn: 7.0.3
     dev: true
 
+  /@ngneat/query@2.0.0-beta.11(@angular/core@17.2.4)(@tanstack/query-core@5.28.4):
+    resolution: {integrity: sha512-SswCciA2Bg0ST9LhGFnPzX0/Tannnr+qD1kHQoE+r1JVVFukMW1AedEUN8AeOMaepS9Q9KnJOvU0GYh15K0O7A==}
+    peerDependencies:
+      '@angular/core': '>=16.0.0 <18.0.0'
+      '@tanstack/query-core': ^5.4.3
+    dependencies:
+      '@angular/core': 17.2.4(rxjs@7.8.1)(zone.js@0.14.4)
+      '@tanstack/query-core': 5.28.4
+      tslib: 2.6.2
+    dev: false
+
   /@ngtools/webpack@17.2.3(@angular/compiler-cli@17.2.4)(typescript@5.3.3)(webpack@5.90.1):
     resolution: {integrity: sha512-+d5Q7/ctDHePYZXcg0GFwL/AbyEkPMHoCiT7pmLI0B0n87D/mYKK/qmVN1VANBrFLTuIe8RtcL0aJ9pw8HAxWA==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -2771,6 +2785,10 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
     dev: true
+
+  /@tanstack/query-core@5.28.4:
+    resolution: {integrity: sha512-uQZqOFqLWUvXNIQZ63XdKzg22NtHzgCBUfDmjDHi3BoF+nUYeBNvMi/xFPtFrMhqRzG2Ir4mYaGsWZzmiEjXpA==}
+    dev: false
 
   /@tootallnate/once@1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
