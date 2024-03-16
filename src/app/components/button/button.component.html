@@ -1,0 +1,6 @@
+<button type="button" class="button button-{{ variant }}" (click)="handleOnClick()">
+    <div class="flex items-center justify-center gap-[0.2vw]">
+        <lucide-icon *ngIf="icon" name="{{ icon }}" class="size-[0.8vw]"></lucide-icon>
+        <ng-content></ng-content>
+    </div>
+</button>
