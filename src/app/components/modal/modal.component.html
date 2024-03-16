@@ -1,0 +1,19 @@
+<div
+    *ngIf="visible"
+    class="w-screen h-screen z-10 absolute top-0 left-0 flex items-center justify-center bg-[#02020280]"
+>
+    <div class="bg-black-950 text-white-50 min-w-[40%] p-6 rounded-md border border-white-900">
+        <div class="flex items-center justify-between text-lg font-bold uppercase tracking-tighter mb-4">
+            <p>{{ title }}</p>
+            <button class="p-2" (click)="close()">
+                <lucide-icon name="x" class="size-5"></lucide-icon>
+            </button>
+        </div>
+        <div>
+            <ng-content></ng-content>
+        </div>
+        <div class="flex flex-row-reverse mt-4">
+            <ng-container *ngTemplateOutlet="tbFooter"></ng-container>
+        </div>
+    </div>
+</div>
