@@ -70,26 +70,21 @@ class Main {
 
     private createWindow() {
         this.window = new BrowserWindow({
-            height: 600,
             width: 800,
-            title: 'Genies',
-            center: true,
+            minWidth: 1280,
+            height: 600,
+            minHeight: 960,
+            frame: false,
             autoHideMenuBar: true,
-            titleBarStyle: 'hidden',
-            titleBarOverlay: {
-                color: '#09090B',
-                symbolColor: '#f7c06e',
-                height: 36
-            },
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,
                 devTools: true
             }
         });
-
         this.window.loadURL('http://localhost:6779');
         this.window.maximize();
+        this.window.webContents.setVisualZoomLevelLimits(1, 1);
     }
 }
 
