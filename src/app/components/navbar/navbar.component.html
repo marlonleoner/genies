@@ -1,0 +1,43 @@
+<div class="h-full flex flex-col">
+    <nav class="h-full flex flex-col gap-[1vh] px-[0.5vw] duration-200 {{ collapsed ? 'w-[3.9vw]' : 'w-[12vw]' }}">
+        <div *ngFor="let navbarItem of navbarContent" class="flex flex-col gap-[1vh] mb-[1vh]">
+            <span
+                *ngIf="navbarItem.title"
+                class="flex m-0 pl-[1w] text-[0.6vw] text-white-500 text-center uppercase duration-200 {{
+                    collapsed ? 'w-0' : 'w-auto'
+                }}"
+                >{{ navbarItem.title }}</span
+            >
+            <a
+                *ngFor="let link of navbarItem.links"
+                [routerLink]="[link.href]"
+                routerLinkActive
+                #activeLink="routerLinkActive"
+                class="px-[0.8vw] py-[0.5vw] text-[0.8vw] font-bold uppercase tracking-tighter border-[0.15vw] rounded-[0.3vw] duration-300 {{
+                    activeLink.isActive
+                        ? 'text-koromiko-300 border-koromiko-300'
+                        : 'text-white-800 border-transparent hover:text-white-50'
+                }}"
+            >
+                <div class="flex items-center">
+                    <lucide-icon *ngIf="link.icon" name="{{ link.icon }}" class="size-[1vw]"></lucide-icon>
+                    <span class="{{ collapsed ? 'w-0 ml-0 opacity-0' : 'w-auto ml-[0.8vw] opacity-1' }}">{{
+                        link.label
+                    }}</span>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <div class="flex flex-row-reverse {{ collapsed ? 'justify-center' : '' }}">
+        <button
+            type="button"
+            (click)="collapseNavbar()"
+            class="text-white-50 text-[1vw] p-[1vw] flex flex-row-reverse items-center duration-300 {{
+                collapsed ? 'rotate-180' : 'rotate-0'
+            }}"
+        >
+            <lucide-icon name="chevrons-left"></lucide-icon>
+        </button>
+    </div>
+</div>
