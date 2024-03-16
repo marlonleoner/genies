@@ -10,14 +10,14 @@ import { LucideAngularModule } from 'lucide-angular';
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class GHMNavbarComponent {
     navbarContent = [
         {
             title: '',
             links: [{ label: 'Live', icon: 'radio', href: '/live' }]
         },
         {
-            title: '',
+            title: 'Actions',
             links: [
                 { label: 'HUDs', icon: 'tv', href: '/huds' },
                 { label: 'Teams', icon: 'shield', href: '/teams' },
