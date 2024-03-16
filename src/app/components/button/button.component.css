@@ -1,5 +1,5 @@
 .button {
-    @apply gap-[0.4vw] px-[1vw] py-[0.25vw] text-[0.7vw] rounded-[0.2vw] border-[0.1vw] duration-300;
+    @apply px-4 py-1.5 text-sm rounded-md border duration-300;
 }
 
 .button-primary {
