@@ -1,0 +1,132 @@
+<div class="pg-container">
+    <div class="pg-content">
+        <span class="pg-title">Players</span>
+    </div>
+    <div class="flex items-center gap-4">
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-down">
+            <span>Export</span>
+        </genieshm-button>
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-up">
+            <span>Import</span>
+        </genieshm-button>
+        <genieshm-button variant="primary" (onClickButton)="openModal('create')" icon="shield-plus">
+            <span>Create</span>
+        </genieshm-button>
+    </div>
+</div>
+
+<div class="players-content">
+    <genieshm-table [values]="players().data || []" [rows]="10" class="h-full">
+        <ng-template #tbHeaderTemplate>
+            <tr>
+                <th style="width: 25%">Player</th>
+                <th style="width: 25%">Real Name</th>
+                <th style="width: 20%">Country</th>
+                <th style="width: 20%">Team</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #tbBodyTemplate let-player>
+            <tr class="group">
+                <td style="width: 25%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="player.avatar"
+                            class="size-12 mr-4 object-contain"
+                            src="http://localhost:6779/api/files/image/{{ player.avatar }}"
+                            alt="{{ player.nickname }}'s Avatar"
+                        />
+                        <span>{{ player.nickname }}</span>
+                    </div>
+                </td>
+                <td style="width: 25%">
+                    <div class="flex items-center">
+                        <span>{{ player.firstName }} {{ player.lastName }}</span>
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="player.country"
+                            class="size-6 mr-2 object-contain"
+                            [src]="player.country.url"
+                            alt="{{ player.country?.name }}"
+                        />
+                        <span>{{ player.country?.id }}</span>
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="player.team && player.team.logo"
+                            class="size-4 mr-2 object-contain"
+                            src="http://localhost:6779/api/files/image/{{ player.team.logo }}"
+                            alt="{{ player.team.name }}'s Logo"
+                        />
+                        <span>{{ player.team?.name }}</span>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div class="w-full flex items-center justify-center gap-4">
+                        <button
+                            type="button"
+                            (click)="openModal('update', player)"
+                            class="opacity-0 group-hover:opacity-100 flex items-center justify-center size-4 rounded-full transition-all duration-300"
+                        >
+                            <lucide-icon name="pencil" class="size-4"></lucide-icon>
+                        </button>
+                        <button
+                            type="button"
+                            (click)="openModal('delete', player)"
+                            class="opacity-0 group-hover:opacity-100 flex items-center justify-center size-4 rounded-full transition-all duration-300"
+                        >
+                            <lucide-icon name="trash-2" class="size-4"></lucide-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </genieshm-table>
+</div>
+
+<genieshm-modal
+    title="{{ isEditing ? 'Edit Player' : 'Create Player' }}"
+    [(visible)]="isModalVisible"
+    (onClose)="closeModal()"
+>
+    <div class="modal-content">
+        <genieshm-input type="file" id="avatar" placeholder="Avatar" [(value)]="playerAvatar"></genieshm-input>
+        <genieshm-input type="text" id="nickname" placeholder="Nick" [(value)]="playerNickname"></genieshm-input>
+        <genieshm-input
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            [(value)]="playerFirstName"
+        ></genieshm-input>
+        <genieshm-input
+            type="text"
+            id="playerLastName"
+            placeholder="Last Name"
+            [(value)]="playerLastName"
+        ></genieshm-input>
+        <genieshm-input type="text" id="steamId" placeholder="Steam ID" [(value)]="playerSteamId"></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="countries"
+            id="country"
+            placeholder="Country"
+            [(value)]="playerCountry"
+        ></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="teams"
+            id="team"
+            placeholder="Team"
+            [(value)]="playerTeam"
+        ></genieshm-input>
+    </div>
+
+    <ng-template #tbModalFooter>
+        <genieshm-button (onClickButton)="save()">Save</genieshm-button>
+    </ng-template>
+</genieshm-modal>
