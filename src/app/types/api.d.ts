@@ -5,3 +5,14 @@ export interface ITeamResponse {
     tag?: string;
     country?: string;
 }
+
+export interface IPlayerResponse {
+    id: string;
+    nickname: string;
+    steamId: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    country: string;
+    team: ITeamResponse;
+}
