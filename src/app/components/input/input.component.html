@@ -1,0 +1,42 @@
+<div class="flex flex-col justify-center gap-1 mb-2">
+    <label [for]="id" class="text-sm">{{ placeholder }}</label>
+    <input
+        *ngIf="type === 'text'"
+        type="text"
+        [id]="id"
+        [placeholder]="placeholder"
+        [(ngModel)]="value"
+        (input)="onTextChange($event)"
+        class="rounded-sm border border-white-700 bg-transparent px-3 py-2 text-base shadow-sm placeholder:opacity-30 placeholder:text-sm"
+    />
+    <select
+        *ngIf="type === 'select'"
+        [id]="id"
+        [(ngModel)]="value"
+        (ngModelChange)="onSelectChange($event)"
+        class="rounded-sm border border-white-700 bg-transparent px-3 py-2 text-base shadow-sm placeholder:opacity-30 placeholder:text-sm"
+    >
+        <option *ngFor="let option of options" [value]="option.id" class="text-white-50 bg-black-950">
+            {{ option.name }}
+        </option>
+    </select>
+    <div
+        *ngIf="type === 'file'"
+        class="relative w-full p-8 rounded-sm border border-dashed border-white-50 m-auto flex items-center justify-center gap-4 opacity-70 hover:opacity-100"
+    >
+        <input
+            type="file"
+            [id]="id"
+            [name]="id"
+            (change)="onFileChange($event)"
+            title=""
+            class="opacity-0 w-full h-full absolute bg-black-300 top-0 left-0 cursor-pointer"
+        />
+        <lucide-icon name="upload" class="size-4"></lucide-icon>
+        <span class="text-sm uppercase tracking-tighter">Drag and drop team logo</span>
+        <img *ngIf="image" [src]="image" alt="Preview Logo" class="size-8 absolute left-8 object-contain" />
+        <button class="flex items-center justify-center p-1 absolute top-2 right-2" (click)="removeLogo()">
+            <lucide-icon name="circle-x" class="size-4"></lucide-icon>
+        </button>
+    </div>
+</div>
