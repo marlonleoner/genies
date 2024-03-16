@@ -2,9 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .pg-container {
+        @apply flex items-center justify-between mb-[1vw];
+    }
+
+    .pg-content {
+        @apply flex gap-[1vw] items-center;
+    }
+
+    .pg-title {
+        @apply uppercase text-[1vw] font-bold;
+    }
+}
+
 html,
 body {
-    @apply w-screen h-screen m-0 p-0;
+    @apply w-screen h-screen m-0 p-0 border-0 outline-0;
 }
 
 button,
