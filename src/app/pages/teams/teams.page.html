@@ -2,7 +2,7 @@
     <div class="pg-content">
         <span class="pg-title">Teams</span>
     </div>
-    <div class="flex items-center gap-[0.6vw]">
+    <div class="flex items-center gap-4">
         <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-down">
             <span>Export</span>
         </genieshm-button>
@@ -14,3 +14,92 @@
         </genieshm-button>
     </div>
 </div>
+
+<div *ngIf="!teams().isLoading" class="h-full">
+    <genieshm-table [values]="teams().data || []" [rows]="10" class="h-full">
+        <ng-template #tbHeaderTemplate>
+            <tr>
+                <th style="width: 35%">Name</th>
+                <th style="width: 35%">Tag</th>
+                <th style="width: 20%">Country</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #tbBodyTemplate let-team>
+            <tr class="group team-column-container">
+                <td style="width: 35%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="team.logo"
+                            class="size-8 mr-4 object-contain"
+                            src="http://localhost:6779/api/files/image/{{ team.logo }}"
+                            alt="{{ team.name }}'s Logo"
+                        />
+                        <span>{{ team.name }}</span>
+                    </div>
+                </td>
+                <td style="width: 35%">
+                    <div class="flex items-center">
+                        <span>{{ team.tag }}</span>
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="team.country"
+                            class="size-6 mr-2 object-contain"
+                            [src]="team.country.url"
+                            alt="{{ team.country?.name }}"
+                        />
+                        <span>{{ team.country?.id }}</span>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    <div class="w-full flex items-center justify-center gap-4">
+                        <button
+                            type="button"
+                            (click)="openModal('update', team)"
+                            class="opacity-0 group-hover:opacity-100 flex items-center justify-center size-4 rounded-full transition-all duration-300"
+                        >
+                            <lucide-icon name="pencil" class="size-4"></lucide-icon>
+                        </button>
+                        <button
+                            type="button"
+                            (click)="openModal('delete', team)"
+                            class="opacity-0 group-hover:opacity-100 flex items-center justify-center size-4 rounded-full transition-all duration-300"
+                        >
+                            <lucide-icon name="trash-2" class="size-4"></lucide-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </genieshm-table>
+</div>
+
+<div *ngIf="teams().isLoading" class="h-full">
+    <p>Loading</p>
+</div>
+
+<genieshm-modal
+    title="{{ isEditing ? 'Update team' : 'Create team' }}"
+    [(visible)]="isModalVisible"
+    (onClose)="closeModal()"
+>
+    <div class="modal-content">
+        <genieshm-input type="file" id="logo" placeholder="Logo" [(value)]="teamLogo"></genieshm-input>
+        <genieshm-input type="text" id="name" placeholder="Name" [(value)]="teamName"></genieshm-input>
+        <genieshm-input type="text" id="tag" placeholder="Tag" [(value)]="teamTag"></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="countries"
+            id="country"
+            placeholder="Country"
+            [(value)]="teamCountry"
+        ></genieshm-input>
+    </div>
+
+    <ng-template #tbModalFooter>
+        <genieshm-button (onClickButton)="save()">Save</genieshm-button>
+    </ng-template>
+</genieshm-modal>
