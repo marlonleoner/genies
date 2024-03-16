@@ -4,15 +4,15 @@
 
 @layer components {
     .pg-container {
-        @apply flex items-center justify-between mb-[1vw];
+        @apply flex items-center justify-between mb-4;
     }
 
     .pg-content {
-        @apply flex gap-[1vw] items-center;
+        @apply flex gap-4 items-center;
     }
 
     .pg-title {
-        @apply uppercase text-[1vw] font-bold;
+        @apply uppercase text-lg font-bold;
     }
 }
 

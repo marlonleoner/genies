@@ -1,1 +1,16 @@
-<p class="text-[#F00]">teams works!</p>
+<div class="pg-container">
+    <div class="pg-content">
+        <span class="pg-title">Teams</span>
+    </div>
+    <div class="flex items-center gap-[0.6vw]">
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-down">
+            <span>Export</span>
+        </genieshm-button>
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-up">
+            <span>Import</span>
+        </genieshm-button>
+        <genieshm-button variant="primary" (onClickButton)="openModal('create')" icon="shield-plus">
+            <span>Create</span>
+        </genieshm-button>
+    </div>
+</div>
