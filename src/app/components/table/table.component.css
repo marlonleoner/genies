@@ -1,0 +1,13 @@
+:host ::ng-deep tr,
+:host ::ng-deep tr {
+    @apply w-full flex items-center;
+}
+
+:host ::ng-deep tbody > tr {
+    @apply h-16 bg-black-900 border-b border-b-black-600 hover:bg-black-800 transition-all duration-300;
+}
+
+:host ::ng-deep th,
+:host ::ng-deep td {
+    @apply flex items-start px-4 py-1;
+}
