@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class ElectronService {
     private ipc = (window as any).require('electron').ipcRenderer;
