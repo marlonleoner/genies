@@ -47,6 +47,9 @@ dependencies:
   express-async-errors:
     specifier: ^3.1.1
     version: 3.1.1(express@4.18.3)
+  lucide-angular:
+    specifier: ^0.358.0
+    version: 0.358.0(@angular/common@17.2.4)(@angular/core@17.2.4)
   reflect-metadata:
     specifier: ^0.2.1
     version: 0.2.1
@@ -5745,6 +5748,17 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /lucide-angular@0.358.0(@angular/common@17.2.4)(@angular/core@17.2.4):
+    resolution: {integrity: sha512-7fThdYx1wsiWSRAPZAGi8oRGwl5F4b8lfL7ndEmSQPkz6EEuYyOKS7JuZYbA1JS9GcP1jl9j1dwhH9/xmuA+vQ==}
+    peerDependencies:
+      '@angular/common': 13.x - 17.x
+      '@angular/core': 13.x - 17.x
+    dependencies:
+      '@angular/common': 17.2.4(@angular/core@17.2.4)(rxjs@7.8.1)
+      '@angular/core': 17.2.4(rxjs@7.8.1)(zone.js@0.14.4)
+      tslib: 2.6.2
+    dev: false
 
   /magic-string@0.30.7:
     resolution: {integrity: sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==}
