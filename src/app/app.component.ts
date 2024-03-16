@@ -1,20 +1,22 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ElectronService } from './service/electron.service';
+import { Router, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
-    selector: 'genies-root',
+    selector: 'genieshm-root',
     standalone: true,
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, NavbarComponent],
     templateUrl: './app.component.html',
-    styleUrl: './app.component.css',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
     title = 'project';
 
-    constructor(private electron: ElectronService) {}
+    constructor(private router: Router) {
+        this.router.navigate(['teams']);
+    }
 
     open() {
-        this.electron.open();
+        // this.electron.open();
     }
 }

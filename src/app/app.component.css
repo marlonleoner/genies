@@ -1,0 +1,3 @@
+:host {
+    @apply flex flex-col w-screen h-screen overflow-hidden text-white-50 bg-black-950;
+}
