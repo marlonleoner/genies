@@ -1,0 +1,82 @@
+<div *ngIf="!match" class="h-full flex items-center justify-center gap-2">
+    <lucide-icon name="server-off" class="size-6"></lucide-icon>
+    <span class="uppercase text-lg font-bold tracking-tighter">No live match</span>
+</div>
+
+<div *ngIf="match" class="h-full flex items-center justify-center gap-8">
+    <div *ngIf="team1" class="flex flex-col w-[40%] divide-y-2 divide-y-reverse items-start text-left">
+        <div class="flex justify-between w-full uppercase tracking-widest bg-white-900 px-4 py-1 flex-row">
+            <span>{{team1.name}}</span>
+            <span>{{team1.score}}</span>
+        </div>
+        <div *ngFor="let player of team1.players" class="w-full flex items-center px-4 py-[0.6vw]">
+            <div class="flex-1 flex flex-col">
+                <span class="text-white-100">{{player.nickname}}</span>
+                <span class="text-sm text-white-300">{{player.steamId}}</span>
+            </div>
+            <button type="button" (click)="add(player)" class="p-4">
+                <lucide-icon name="pencil" class="size-4"></lucide-icon>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="team2" class="flex flex-col w-[40%] divide-y-2 divide-y-reverse items-end text-right">
+        <div class="flex justify-between w-full uppercase tracking-widest bg-white-900 px-4 py-1 flex-row-reverse">
+            <span>{{team2.name}}</span>
+            <span>{{team2.score}}</span>
+        </div>
+        <div *ngFor="let player of team2.players" class="w-full flex items-center px-4 py-[0.6vw] flex-row-reverse">
+            <div class="flex-1 flex flex-col">
+                <span class="text-white-100">{{player.nickname}}</span>
+                <span class="text-sm text-white-300">{{player.steamId}}</span>
+            </div>
+            <div>
+                <button type="button" (click)="add(player)" class="p-4">
+                    <lucide-icon name="pencil" class="size-4"></lucide-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<genieshm-modal
+    title="{{ isEditing ? 'Edit Player' : 'Create Player' }}"
+    [(visible)]="isModalVisible"
+    (onClose)="closeModal()"
+>
+    <div>
+        <genieshm-input type="file" id="avatar" placeholder="Avatar" [(value)]="playerAvatar"></genieshm-input>
+        <genieshm-input type="text" id="nickname" placeholder="Nick" [(value)]="playerNickname"></genieshm-input>
+        <genieshm-input
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            [(value)]="playerFirstName"
+        ></genieshm-input>
+        <genieshm-input
+            type="text"
+            id="playerLastName"
+            placeholder="Last Name"
+            [(value)]="playerLastName"
+        ></genieshm-input>
+        <genieshm-input type="text" id="steamId" placeholder="Steam ID" [(value)]="playerSteamId"></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="countries"
+            id="country"
+            placeholder="Country"
+            [(value)]="playerCountry"
+        ></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="teams().data || []"
+            id="team"
+            placeholder="Team"
+            [(value)]="playerTeam"
+        ></genieshm-input>
+    </div>
+
+    <ng-template #tbModalFooter>
+        <genieshm-button (onClickButton)="save()">Save</genieshm-button>
+    </ng-template>
+</genieshm-modal>
