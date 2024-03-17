@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="players-content">
+<div class="h-full">
     <genieshm-table [values]="players().data || []" [rows]="10" class="h-full">
         <ng-template #tbHeaderTemplate>
             <tr>
@@ -59,7 +59,7 @@
                     <div class="flex items-center">
                         <img
                             *ngIf="player.team && player.team.logo"
-                            class="size-4 mr-2 object-contain"
+                            class="size-8 mr-2 object-contain"
                             src="http://localhost:6779/api/files/image/{{ player.team.logo }}"
                             alt="{{ player.team.name }}'s Logo"
                         />
@@ -119,7 +119,7 @@
         ></genieshm-input>
         <genieshm-input
             type="select"
-            [options]="teams"
+            [options]="teams().data || []"
             id="team"
             placeholder="Team"
             [(value)]="playerTeam"

@@ -16,3 +16,5 @@ export interface IPlayerResponse {
     country: string;
     team: ITeamResponse;
 }
+
+export interface IMatchResponse {}

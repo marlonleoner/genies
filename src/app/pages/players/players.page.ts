@@ -10,7 +10,7 @@ import { GHMTableComponent } from '../../components/table/table.component';
 
 import { ApiService } from '../../service/api.service';
 
-import { IPlayerResponse } from '../../types/api';
+import { IPlayerResponse, ITeamResponse } from '../../types/api';
 
 @Component({
     selector: 'genieshm-players',
@@ -31,7 +31,7 @@ export class PlayersPage {
 
     players: Signal<QueryObserverResult<IPlayerResponse[], Error>>;
 
-    teams: any[] = [];
+    teams: Signal<QueryObserverResult<ITeamResponse[], Error>>;
 
     countries: any[] = [];
 
@@ -49,6 +49,7 @@ export class PlayersPage {
 
     constructor() {
         this.players = this.api.getPlayers().result;
+        this.teams = this.api.getTeams().result;
     }
 
     private resetInputs = () => {
@@ -80,7 +81,8 @@ export class PlayersPage {
                 this.playerTeam = player?.team?.id || '';
                 break;
             case 'delete':
-                console.log(player);
+                const confirmDelete = confirm('Remove player?');
+                if (confirmDelete) this.remove(player?.id);
                 break;
         }
     };
@@ -103,5 +105,10 @@ export class PlayersPage {
             teamId: this.playerTeam
         });
         this.closeModal();
+    };
+
+    remove = (playerId?: string) => {
+        if (!playerId) return;
+        this.api.removePlayer().mutateAsync(playerId);
     };
 }

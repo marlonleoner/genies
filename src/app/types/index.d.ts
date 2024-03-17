@@ -1,5 +1,10 @@
 type ISide = 'T' | 'CT';
 
+interface IMatch {
+    team1: IMatch;
+    team2: IMatch;
+}
+
 interface ITeam {
     id: string;
     name: string;
@@ -8,6 +13,7 @@ interface ITeam {
     country?: string;
     score?: number;
     side?: ISide;
+    players?: IPlayer[];
 }
 
 interface IPlayer {

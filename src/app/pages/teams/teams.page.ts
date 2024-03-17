@@ -55,7 +55,7 @@ export class TeamsPage {
     };
 
     openModal = (action: string, team?: ITeam) => {
-        this.isModalVisible = true;
+        this.isModalVisible = action === 'create' || action === 'update';
 
         switch (action) {
             case 'create':
@@ -69,7 +69,8 @@ export class TeamsPage {
                 this.teamCountry = team?.country || '';
                 break;
             case 'delete':
-                console.log(team);
+                const confirmDelete = confirm('Delete team?');
+                if (confirmDelete) this.remove(team?.id);
                 break;
         }
     };
@@ -90,5 +91,10 @@ export class TeamsPage {
         });
 
         this.closeModal();
+    };
+
+    remove = (teamId?: string) => {
+        if (!teamId) return;
+        this.api.removeTeam().mutateAsync(teamId);
     };
 }

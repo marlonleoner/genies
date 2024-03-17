@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { QueryObserverResult, injectMutation, injectQuery, injectQueryClient } from '@ngneat/query';
 import { Result } from '@ngneat/query/lib/types';
 
-import { IPlayerResponse, ITeamResponse } from '../types/api';
+import { IMatchResponse, IPlayerResponse, ITeamResponse } from '../types/api';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +13,7 @@ export class ApiService {
 
     private teamsKey = 'teams';
     private playersKey = 'players';
+    private matchesKey = 'matches';
 
     private http = inject(HttpClient);
 
@@ -58,6 +59,16 @@ export class ApiService {
         return this.createTeam();
     };
 
+    removeTeam = () => {
+        return this.mutation({
+            mutationFn: (teamId: string) =>
+                this.http.delete<ITeamResponse>(`${this.baseUrl}${this.teamsKey}/${teamId}`),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.teamsKey] });
+            }
+        });
+    };
+
     getPlayers = (): Result<QueryObserverResult<IPlayerResponse[], Error>> => {
         return this.query({
             queryKey: [this.playersKey] as const,
@@ -88,5 +99,24 @@ export class ApiService {
     savePlayer = (isEditing: boolean) => {
         if (isEditing) return this.updatePlayer();
         return this.createPlayer();
+    };
+
+    removePlayer = () => {
+        return this.mutation({
+            mutationFn: (playerId: string) =>
+                this.http.delete<ITeamResponse>(`${this.baseUrl}${this.playersKey}/${playerId}`),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.playersKey] });
+            }
+        });
+    };
+
+    getMatches = (): Result<QueryObserverResult<IMatchResponse[], Error>> => {
+        return this.query({
+            queryKey: [this.matchesKey] as const,
+            queryFn: () => {
+                return this.http.get<IMatchResponse[]>(`${this.baseUrl}${this.matchesKey}`);
+            }
+        });
     };
 }
