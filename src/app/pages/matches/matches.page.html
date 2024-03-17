@@ -1,0 +1,110 @@
+<div class="pg-container">
+    <div class="pg-content">
+        <span class="pg-title">Matches</span>
+    </div>
+    <div class="flex items-center gap-4">
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-down">
+            <span>Export</span>
+        </genieshm-button>
+        <genieshm-button variant="link" (onClickButton)="openModal('create')" icon="file-up">
+            <span>Import</span>
+        </genieshm-button>
+        <genieshm-button variant="primary" (onClickButton)="openModal('create')" icon="shield-plus">
+            <span>Create</span>
+        </genieshm-button>
+    </div>
+</div>
+
+<div class="h-full">
+    <genieshm-table [values]="matches().data || []" [rows]="10" class="h-full">
+        <ng-template #tbHeaderTemplate>
+            <tr>
+                <th style="width: 25%">Match</th>
+                <th style="width: 25%">Score</th>
+                <th style="width: 20%">Type</th>
+                <th style="width: 20%">Date</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </ng-template>
+        <ng-template #tbBodyTemplate let-match>
+            <tr class="group">
+                <td style="width: 25%">
+                    <div class="flex items-center">
+                        <span>{{ match.team1.tag || match.team1.name }}</span>
+                        <strong class="m-2">VS</strong>
+                        <span>{{ match.team2.tag || match.team2.name }}</span>
+                        <div *ngIf="match.live" class="ml-4 flex items-center gap-1 px-2 py-1 bg-[#F00] rounded-md">
+                            <lucide-icon name="radio" class="size-4"></lucide-icon>
+                            <strong class="text-xs">LIVE</strong>
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 25%">
+                    <div class="flex items-center">
+                        <img
+                            *ngIf="match.team1 && match.team1.logo"
+                            class="size-6 m-2 object-contain"
+                            src="http://localhost:6779/api/files/image/{{ match.team1.logo }}"
+                            alt="{{ match.team1.name }}'s Logo"
+                        />
+                        <span>0</span>
+                        <strong class="m-2">VS</strong>
+                        <span>0</span>
+                        <img
+                            *ngIf="match.team2 && match.team2.logo"
+                            class="size-6 m-2 object-contain"
+                            src="http://localhost:6779/api/files/image/{{ match.team2.logo }}"
+                            alt="{{ match.team2.name }}'s Logo"
+                        />
+                    </div>
+                </td>
+                <td style="width: 20%">
+                    <div class="flex items-center">Best of {{ match.bestOf }}</div>
+                </td>
+                <td style="width: 20%">
+                    <div class="flex items-center">{{ match.startTime }}</div>
+                </td>
+                <td style="width: 10%">
+                    <div class="flex items-center">
+                        <button type="button" class="p-2" (click)="setLive(match)" [disabled]="match.live">
+                            <lucide-icon name="radio" class="size-4"></lucide-icon>
+                        </button>
+                        <button type="button" class="p-2" (click)="openModal('update', match)">
+                            <lucide-icon name="pencil" class="size-4"></lucide-icon>
+                        </button>
+                        <button type="button" class="p-2" (click)="remove(match)">
+                            <lucide-icon name="trash" class="size-4"></lucide-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </genieshm-table>
+</div>
+
+<genieshm-modal
+    title="{{ isEditing ? 'Update Match' : 'Create Match' }}"
+    [(visible)]="isModalVisible"
+    (onClose)="closeModal()"
+>
+    <div class="modal-content">
+        <genieshm-input
+            type="select"
+            [options]="teams().data || []"
+            id="country"
+            placeholder="Team 1"
+            [(value)]="team1"
+        ></genieshm-input>
+        <genieshm-input
+            type="select"
+            [options]="teams().data || []"
+            id="country"
+            placeholder="Team 2"
+            [(value)]="team2"
+        ></genieshm-input>
+    </div>
+
+    <ng-template #tbModalFooter>
+        <genieshm-button (onClickButton)="save()">Save</genieshm-button>
+    </ng-template>
+</genieshm-modal>
