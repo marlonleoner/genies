@@ -119,4 +119,49 @@ export class ApiService {
             }
         });
     };
+
+    private createMatch = () => {
+        return this.mutation({
+            mutationFn: (match: any) => this.http.post<IMatchResponse>(`${this.baseUrl}${this.matchesKey}`, match),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.matchesKey] });
+            }
+        });
+    };
+
+    private updateMatch = () => {
+        return this.mutation({
+            mutationFn: (match: any) => this.http.put<IMatchResponse>(`${this.baseUrl}${this.matchesKey}`, match),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.matchesKey] });
+            }
+        });
+    };
+
+    saveMatch = (isEditing: boolean) => {
+        if (isEditing) return this.updateMatch();
+        return this.createMatch();
+    };
+
+    removeMatch = () => {
+        return this.mutation({
+            mutationFn: (matchId: string) =>
+                this.http.delete<IMatchResponse>(`${this.baseUrl}${this.matchesKey}/${matchId}`),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.matchesKey] });
+            }
+        });
+    };
+
+    setLive = () => {
+        return this.mutation({
+            mutationFn: (matchId: string) =>
+                this.http.patch<IMatchResponse>(`${this.baseUrl}${this.matchesKey}/live`, {
+                    matchId
+                }),
+            onSuccess: () => {
+                this.client.invalidateQueries({ queryKey: [this.matchesKey] });
+            }
+        });
+    };
 }
