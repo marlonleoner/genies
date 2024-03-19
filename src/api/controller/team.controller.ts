@@ -14,11 +14,7 @@ export class TeamController {
         return response.json(teams);
     };
 
-    getOne = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    getOne = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { teamId } = request.params;
             const team = await this.teamService.getOne(teamId);
@@ -33,11 +29,7 @@ export class TeamController {
         return response.json(team);
     };
 
-    update = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    update = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const team = await this.teamService.update(request.body);
             return response.json(team);
@@ -46,11 +38,7 @@ export class TeamController {
         }
     };
 
-    delete = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    delete = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { teamId } = request.params;
             await this.teamService.delete(teamId);

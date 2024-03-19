@@ -11,7 +11,7 @@ export const DB = new DataSource({
     database: databaseFile,
     synchronize: true,
     logging: true,
-    entities: [Team, Player, Match],
+    entities: [Team, Player, Match]
 });
 
 DB.initialize();

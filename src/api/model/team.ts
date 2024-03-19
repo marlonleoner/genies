@@ -1,11 +1,4 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    PrimaryColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 import { generateCustomId } from '../../util/cuid';
 import { IBasicTeam } from '../types/request';

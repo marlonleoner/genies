@@ -1,12 +1,4 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    PrimaryColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 import { generateCustomId } from '../../util/cuid';
 import { IMatchRequest } from '../types/request';
@@ -29,7 +21,7 @@ export class Match {
     @ManyToOne(() => Team, (team) => team.matches, {
         nullable: true,
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'SET NULL'
     })
     @JoinColumn()
     team1?: Team | null;
@@ -37,7 +29,7 @@ export class Match {
     @ManyToOne(() => Team, (team) => team.matches, {
         nullable: true,
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'SET NULL'
     })
     @JoinColumn()
     team2?: Team;

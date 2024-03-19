@@ -14,11 +14,7 @@ export class PlayerController {
         return response.json(players);
     };
 
-    getOne = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    getOne = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { playerId } = request.params;
             const player = await this.playerService.getOne(playerId);
@@ -33,11 +29,7 @@ export class PlayerController {
         return response.json(player);
     };
 
-    update = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    update = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const player = await this.playerService.update(request.body);
             return response.json(player);
@@ -46,11 +38,7 @@ export class PlayerController {
         }
     };
 
-    delete = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    delete = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { playerId } = request.params;
             const player = await this.playerService.delete(playerId);

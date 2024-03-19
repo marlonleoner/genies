@@ -7,10 +7,7 @@ export class PlayerRepository {
     private db: Repository<Player> = DB.getRepository(Player);
 
     findAll = async () => {
-        return await this.db
-            .createQueryBuilder('player')
-            .leftJoinAndSelect('player.team', 'team')
-            .getMany();
+        return await this.db.createQueryBuilder('player').leftJoinAndSelect('player.team', 'team').getMany();
     };
 
     findOneOrError = async (playerId: string) => {

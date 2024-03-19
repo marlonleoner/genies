@@ -24,7 +24,7 @@ export class TeamService {
             name,
             tag: tag,
             country: country,
-            logo: logoFileName,
+            logo: logoFileName
         });
 
         return this.repository.save(team);
@@ -41,7 +41,7 @@ export class TeamService {
             name,
             tag: tag || null,
             country: country || null,
-            logo: logoFileName,
+            logo: logoFileName
         });
 
         return this.repository.save(team);

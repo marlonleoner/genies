@@ -15,11 +15,7 @@ export class MatchRepository {
     };
 
     setAllNotLiveExceptThis = async () => {
-        return await this.db
-            .createQueryBuilder()
-            .update(Match)
-            .set({ live: false })
-            .execute();
+        return await this.db.createQueryBuilder().update(Match).set({ live: false }).execute();
     };
 
     findOneOrError = async (matchId: string) => {

@@ -11,7 +11,7 @@ export class FileService {
         R: 'gif',
         U: 'webp',
         J: 'PDF',
-        P: 'svg',
+        P: 'svg'
     };
 
     private static remove = (file: string): void => {
@@ -24,10 +24,7 @@ export class FileService {
         return imageFilePath;
     };
 
-    static saveImage = async (
-        newImage?: string,
-        oldImage?: string | null
-    ): Promise<string | null> => {
+    static saveImage = async (newImage?: string, oldImage?: string | null): Promise<string | null> => {
         if (oldImage) FileService.remove(path.join(imagesFolder, oldImage));
         if (!newImage) return null;
 
@@ -36,7 +33,7 @@ export class FileService {
         const imageFilePath = path.join(imagesFolder, imageFileName);
 
         await promises.writeFile(imageFilePath, newImage, {
-            encoding: 'base64',
+            encoding: 'base64'
         });
 
         return imageFileName;

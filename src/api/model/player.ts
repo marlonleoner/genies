@@ -1,12 +1,4 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    PrimaryColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 import { generateCustomId } from '../../util/cuid';
 import { IBasicPlayer } from '../types/request';
@@ -38,7 +30,7 @@ export class Player {
     @ManyToOne(() => Team, (team) => team.players, {
         nullable: true,
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'SET NULL'
     })
     @JoinColumn()
     team?: Team | null;
@@ -49,15 +41,7 @@ export class Player {
     @UpdateDateColumn({ select: false, default: () => 'CURRENT_TIMESTAMP' })
     updatedAt!: Date;
 
-    static create({
-        nickname,
-        steamId,
-        firstName,
-        lastName,
-        avatar,
-        country,
-        team,
-    }: IBasicPlayer): Player {
+    static create({ nickname, steamId, firstName, lastName, avatar, country, team }: IBasicPlayer): Player {
         const player = new Player();
         player.id = generateCustomId();
         player.nickname = nickname;
@@ -71,15 +55,7 @@ export class Player {
         return player;
     }
 
-    set({
-        nickname,
-        steamId,
-        firstName,
-        lastName,
-        avatar,
-        country,
-        team,
-    }: IBasicPlayer): void {
+    set({ nickname, steamId, firstName, lastName, avatar, country, team }: IBasicPlayer): void {
         this.nickname = nickname;
         this.steamId = steamId;
         this.firstName = firstName;

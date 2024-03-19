@@ -5,7 +5,7 @@ const MatchSchema = object({
     team2Id: string().min(1),
     bestOf: number(),
     startTime: number().optional(),
-    active: boolean().optional(),
+    active: boolean().optional()
 });
 
 export { MatchSchema };

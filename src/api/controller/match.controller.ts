@@ -14,11 +14,7 @@ export class MatchController {
         return response.json(matches);
     };
 
-    getOne = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    getOne = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { matchId } = request.params;
             return response.json(await this.matchService.getOne(matchId));
@@ -27,11 +23,7 @@ export class MatchController {
         }
     };
 
-    create = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    create = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const match = await this.matchService.create(request.body);
             return response.json(match);
@@ -40,11 +32,7 @@ export class MatchController {
         }
     };
 
-    update = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    update = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const { matchId } = request.params;
             const match = await this.matchService.update(matchId, request.body);
@@ -54,11 +42,7 @@ export class MatchController {
         }
     };
 
-    getLive = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    getLive = async (request: Request, response: Response, next: NextFunction) => {
         try {
             const match = await this.matchService.getLive();
             return response.json(match);
@@ -67,13 +51,9 @@ export class MatchController {
         }
     };
 
-    setLive = async (
-        request: Request,
-        response: Response,
-        next: NextFunction
-    ) => {
+    setLive = async (request: Request, response: Response, next: NextFunction) => {
         try {
-            const { matchId } = request.params;
+            const { matchId } = request.body;
             const match = await this.matchService.setLive(matchId);
             return response.json(match);
         } catch (error) {

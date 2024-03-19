@@ -6,7 +6,7 @@ import { MatchSchema } from '../schema/match.schema';
 import { TeamService } from './team.service';
 
 const MatchLiveSchema = z.object({
-    matchId: z.string(),
+    matchId: z.string()
 });
 
 export class MatchService {
@@ -32,15 +32,14 @@ export class MatchService {
             team1,
             team2,
             bestOf,
-            startTime,
+            startTime
         });
 
         return this.repository.save(match);
     };
 
     update = async (matchId: string, data: any) => {
-        const { team1Id, team2Id, bestOf, startTime, active } =
-            MatchSchema.parse(data);
+        const { team1Id, team2Id, bestOf, startTime, active } = MatchSchema.parse(data);
 
         const team1 = await this.teamService.getOne(team1Id);
         const team2 = await this.teamService.getOne(team2Id);
@@ -52,7 +51,7 @@ export class MatchService {
             team2,
             bestOf,
             startTime,
-            active,
+            active
         });
 
         return this.repository.save(match);
