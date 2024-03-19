@@ -33,25 +33,32 @@ export class MatchesPage {
     isModalVisible: boolean = false;
     isEditing: boolean = false;
 
-    team1: any = undefined;
-
-    team2: any = undefined;
+    matchId: string = '';
+    team1: string = '';
+    team2: string = '';
 
     constructor() {
         this.matches = this.api.getMatches().result;
         this.teams = this.api.getTeams().result;
     }
 
-    private resetInputs = () => {};
+    private resetInputs = () => {
+        this.matchId = '';
+        this.team1 = '';
+        this.team2 = '';
+    };
 
     openModal = (action: 'create' | 'update', match?: any) => {
         this.isModalVisible = true;
+
+        console.log(this.matches().data);
 
         switch (action) {
             case 'create':
                 break;
             case 'update':
                 this.isEditing = true;
+                this.matchId = match.id;
                 this.team1 = match.team1.id;
                 this.team2 = match.team2.id;
                 break;
@@ -65,14 +72,21 @@ export class MatchesPage {
     };
 
     save = () => {
-        alert(JSON.stringify(this.team1));
+        this.api.saveMatch(this.isEditing).mutateAsync({
+            matchId: this.matchId,
+            team1Id: this.team1,
+            team2Id: this.team2,
+            bestOf: 1
+        });
+        this.closeModal();
     };
 
     remove = (match: any) => {
-        alert(match);
+        const confirmDelete = confirm('Remove match?');
+        if (confirmDelete) this.api.removeMatch().mutateAsync(match.id);
     };
 
     setLive = (match: any) => {
-        alert(match);
+        this.api.setLive().mutateAsync(match.id);
     };
 }

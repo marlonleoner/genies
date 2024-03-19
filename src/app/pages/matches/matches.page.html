@@ -66,8 +66,8 @@
                 </td>
                 <td style="width: 10%">
                     <div class="flex items-center">
-                        <button type="button" class="p-2" (click)="setLive(match)" [disabled]="match.live">
-                            <lucide-icon name="radio" class="size-4"></lucide-icon>
+                        <button type="button" class="p-2 group" (click)="setLive(match)" [disabled]="match.live">
+                            <lucide-icon name="radio" class="size-4 group group-disabled:opacity-40"></lucide-icon>
                         </button>
                         <button type="button" class="p-2" (click)="openModal('update', match)">
                             <lucide-icon name="pencil" class="size-4"></lucide-icon>
