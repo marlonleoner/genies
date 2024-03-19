@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
     selector: 'genieshm-not-found',
     standalone: true,
-    imports: [],
+    imports: [LucideAngularModule],
     templateUrl: './not-found.page.html',
     styleUrl: './not-found.page.css'
 })
