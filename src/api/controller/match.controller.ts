@@ -34,8 +34,17 @@ export class MatchController {
 
     update = async (request: Request, response: Response, next: NextFunction) => {
         try {
+            const match = await this.matchService.update(request.body);
+            return response.json(match);
+        } catch (error) {
+            return next(error);
+        }
+    };
+
+    delete = async (request: Request, response: Response, next: NextFunction) => {
+        try {
             const { matchId } = request.params;
-            const match = await this.matchService.update(matchId, request.body);
+            const match = await this.matchService.delete(matchId);
             return response.json(match);
         } catch (error) {
             return next(error);

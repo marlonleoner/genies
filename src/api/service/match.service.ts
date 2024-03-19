@@ -38,8 +38,8 @@ export class MatchService {
         return this.repository.save(match);
     };
 
-    update = async (matchId: string, data: any) => {
-        const { team1Id, team2Id, bestOf, startTime, active } = MatchSchema.parse(data);
+    update = async (data: any) => {
+        const { matchId, team1Id, team2Id, bestOf, startTime, active } = MatchSchema.parse(data);
 
         const team1 = await this.teamService.getOne(team1Id);
         const team2 = await this.teamService.getOne(team2Id);
@@ -55,6 +55,11 @@ export class MatchService {
         });
 
         return this.repository.save(match);
+    };
+
+    delete = async (matchId: string) => {
+        await this.repository.findOneOrError(matchId);
+        await this.repository.delete(matchId);
     };
 
     setLive = async (matchId: string) => {

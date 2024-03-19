@@ -10,6 +10,7 @@ matchRouter.patch('/live', matchController.setLive);
 matchRouter.get('/', matchController.getAll);
 matchRouter.get('/:matchId', matchController.getOne);
 matchRouter.post('/', matchController.create);
-matchRouter.put('/:matchId', matchController.update);
+matchRouter.put('/', matchController.update);
+matchRouter.delete('/:matchId', matchController.delete);
 
 export default matchRouter;
