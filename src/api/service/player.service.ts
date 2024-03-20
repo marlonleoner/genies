@@ -18,6 +18,10 @@ export class PlayerService {
         return this.repository.findOneOrError(playerId);
     };
 
+    getManyBySteamId = async (steamIds: string[]) => {
+        return this.repository.findManyBySteamId(steamIds);
+    };
+
     create = async (data: ICreatePlayer) => {
         const { nickname, steamId, firstName, lastName, avatar, country, teamId } = CreatePlayerSchema.parse(data);
 

@@ -22,6 +22,14 @@ export class PlayerRepository {
         return player;
     };
 
+    findManyBySteamId = async (steamIds: string[]) => {
+        return await this.db
+            .createQueryBuilder('player')
+            .leftJoinAndSelect('player.team', 'team')
+            .where('player.steamId IN (:...steamIds)', { steamIds })
+            .getMany();
+    };
+
     save = async (player: Player): Promise<Player> => {
         return await this.db.save(player);
     };
