@@ -13,4 +13,14 @@ export class GsiController {
             return next(error);
         }
     };
+
+    config = (request: Request, response: Response, next: NextFunction) => {
+        try {
+            const { reversed } = request.query;
+            this.gsiService.config(Boolean(reversed));
+            return response.end();
+        } catch (error) {
+            return next(error);
+        }
+    };
 }

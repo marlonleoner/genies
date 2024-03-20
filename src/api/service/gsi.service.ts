@@ -1,6 +1,7 @@
 import { GSIEvents } from '../../util/constants';
 import { logger } from '../config/logger';
 import { GlobalEmitter } from '../lib/emitter';
+import { Player } from '../model/player';
 import { Team } from '../model/team';
 import { BombSites, RoundPhase, RoundWinType, SideTeam } from '../types/common';
 import {
@@ -30,6 +31,8 @@ import {
     GSIWeapon,
     GSIWeapons
 } from '../types/gsi';
+import { MatchService } from './match.service';
+import { PlayerService } from './player.service';
 
 const mapsBombSites: { [mapName: string]: (position: number[]) => 'A' | 'B' } = {
     de_mirage: (position) => (position[1] < -600 ? 'A' : 'B'),
@@ -72,6 +75,14 @@ export class GsiService {
     /**
      *
      */
+    private steamIds?: string[];
+    /**
+     *
+     */
+    private players?: Player[];
+    /**
+     *
+     */
     private roundsDamage: {
         round: number;
         players: {
@@ -79,6 +90,15 @@ export class GsiService {
             damage: number;
         }[];
     }[] = [];
+
+    private matchService: MatchService;
+
+    private playerService: PlayerService;
+
+    constructor() {
+        this.matchService = new MatchService();
+        this.playerService = new PlayerService();
+    }
 
     private parseMap = (map: GSIMap): IMap => {
         return {
@@ -184,18 +204,20 @@ export class GsiService {
         Object.entries(players).map(([steamId, player]) => this.parsePlayer(steamId, player));
 
     private parsePlayer = (steamId: string, player: GSIPlayer): IPlayer => {
+        const extension = this.players?.find((p) => p.steamId === steamId);
+
         const state = this.parsePlayerState(player.state);
         const stats = this.parsePlayerStats(player.match_stats);
         const weapons = this.parseWeapons(player.weapons);
 
         return {
-            id: null,
+            id: extension?.id || null,
             steamId,
             dead: state.health === 0,
-            name: null,
+            name: extension?.firstName?.concat(' ').concat(extension?.lastName || '') || null,
             nickname: player.name,
-            country: null,
-            avatar: null,
+            country: extension?.country || null,
+            avatar: extension?.avatar || null,
             slot: player.observer_slot,
             side: player.team,
             state,
@@ -357,6 +379,8 @@ export class GsiService {
 
         const { team1, team2 } = this.parseTeams(map.team_ct, map.team_t, players);
 
+        this.steamIds = players.map(({ steamId }) => steamId);
+
         return {
             map: parsedMap,
             bomb: parsedBomb,
@@ -506,5 +530,18 @@ export class GsiService {
 
         GlobalEmitter.emit(GSIEvents['RAW'], raw);
         GlobalEmitter.emit(GSIEvents['DATA'], data);
+    };
+
+    config = async (reversed: boolean) => {
+        console.log(reversed);
+
+        try {
+            const { team1, team2 } = await this.matchService.getLive();
+            this.team1 = (reversed ? team1 : team2) || undefined;
+            this.team2 = (reversed ? team2 : team1) || undefined;
+            if (this.steamIds) this.players = await this.playerService.getManyBySteamId(this.steamIds);
+        } catch (error) {
+            console.log('error', error);
+        }
     };
 }
