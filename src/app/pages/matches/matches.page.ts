@@ -2,12 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, Signal, inject } from '@angular/core';
 import { QueryObserverResult } from '@ngneat/query';
 import { LucideAngularModule } from 'lucide-angular';
+
 import { GHMButtonComponent } from '../../components/button/button.component';
 import { GHMInputComponent } from '../../components/input/input.component';
 import { GHMModalComponent } from '../../components/modal/modal.component';
 import { GHMTableComponent } from '../../components/table/table.component';
+
 import { ApiService } from '../../service/api.service';
+
 import { IMatchResponse, ITeamResponse } from '../../types/api';
+
+import { BOList } from '../../utils/constants';
 
 @Component({
     selector: 'app-matches',
@@ -36,6 +41,9 @@ export class MatchesPage {
     matchId: string = '';
     team1: string = '';
     team2: string = '';
+    bestOf: string = '';
+
+    bestOfList: IBestOf[] = BOList;
 
     constructor() {
         this.matches = this.api.getMatches().result;
@@ -46,6 +54,7 @@ export class MatchesPage {
         this.matchId = '';
         this.team1 = '';
         this.team2 = '';
+        this.bestOf = '';
     };
 
     openModal = (action: 'create' | 'update', match?: any) => {
@@ -61,6 +70,7 @@ export class MatchesPage {
                 this.matchId = match.id;
                 this.team1 = match.team1.id;
                 this.team2 = match.team2.id;
+                this.bestOf = match.bestOf;
                 break;
         }
     };
@@ -76,7 +86,7 @@ export class MatchesPage {
             matchId: this.matchId,
             team1Id: this.team1,
             team2Id: this.team2,
-            bestOf: 1
+            bestOf: Number(this.bestOf) || 1
         });
         this.closeModal();
     };

@@ -87,22 +87,29 @@
     [(visible)]="isModalVisible"
     (onClose)="closeModal()"
 >
-    <div class="modal-content">
+    <div class="flex gap-4">
         <genieshm-input
             type="select"
             [options]="teams().data || []"
-            id="country"
+            id="team1"
             placeholder="Team 1"
             [(value)]="team1"
         ></genieshm-input>
         <genieshm-input
             type="select"
             [options]="teams().data || []"
-            id="country"
+            id="team2"
             placeholder="Team 2"
             [(value)]="team2"
         ></genieshm-input>
     </div>
+    <genieshm-input
+        type="select"
+        [options]="bestOfList"
+        id="bestOf"
+        placeholder="Best Of"
+        [(value)]="bestOf"
+    ></genieshm-input>
 
     <ng-template #tbModalFooter>
         <genieshm-button (onClickButton)="save()">Save</genieshm-button>

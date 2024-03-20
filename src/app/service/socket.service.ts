@@ -22,9 +22,4 @@ export class SocketService {
     on(eventName: string, cb: (data: string) => void) {
         this.socket.on(eventName, cb);
     }
-
-    openDevHud() {
-        console.log('request to open hud in socket service');
-        this.socket.emit('@GENIES/OPEN_DEV_HUD');
-    }
 }
