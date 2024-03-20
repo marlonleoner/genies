@@ -1,8 +1,13 @@
 type ISide = 'T' | 'CT';
 
+interface IBestOf {
+    id: number;
+    name: string;
+}
+
 interface IMatch {
-    team1: IMatch;
-    team2: IMatch;
+    team1: ITeam;
+    team2: ITeam;
 }
 
 interface ITeam {
