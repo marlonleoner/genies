@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { HudsPage } from './pages/huds/huds.page';
 import { LivePage } from './pages/live/live.page';
 import { MatchesPage } from './pages/matches/matches.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
@@ -8,6 +9,7 @@ import { TeamsPage } from './pages/teams/teams.page';
 
 export const routes: Routes = [
     { path: 'live', component: LivePage },
+    { path: 'huds', component: HudsPage },
     { path: 'teams', component: TeamsPage },
     { path: 'players', component: PlayersPage },
     { path: 'matches', component: MatchesPage },
