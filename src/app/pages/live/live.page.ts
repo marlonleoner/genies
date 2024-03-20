@@ -63,9 +63,9 @@ export class LivePage {
         this.subscriptionData = this.socketService.data$.subscribe((data) => {
             if (!data) return;
 
-            const match = JSON.parse(JSON.stringify(data));
-            this.team1 = match.team1;
-            this.team2 = match.team2;
+            this.match = JSON.parse(JSON.stringify(data));
+            this.team1 = this.match?.team1;
+            this.team2 = this.match?.team2;
 
             this.subscriptionData?.unsubscribe();
         });
