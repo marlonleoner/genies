@@ -9,15 +9,21 @@ import { LucideAngularModule } from 'lucide-angular';
     styleUrl: './title-bar.component.css'
 })
 export class GHMTitleBarComponent {
+    private ipcRenderer?: any;
+
+    constructor() {
+        this.ipcRenderer = <any>window.require('electron/renderer').ipcRenderer;
+    }
+
     minimize = () => {
-        console.log('Ikpa');
+        this.ipcRenderer?.send('@GHM/MINIMIZE_APP');
     };
 
-    size = () => {
-        console.log('Ikpa');
+    maximize = () => {
+        this.ipcRenderer?.send('@GHM/MAXIMIZE_APP');
     };
 
     close = () => {
-        console.log('Ikpa');
+        this.ipcRenderer?.send('@GHM/CLOSE_APP');
     };
 }
