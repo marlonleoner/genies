@@ -21,7 +21,7 @@ export class AppComponent {
         const w = <any>window;
         if (w) this.isInsideElectron = !!w.process;
 
-        this.router.navigate(['teams']);
+        this.router.navigate(['home']);
     }
 
     open() {
