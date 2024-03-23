@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Signal, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { QueryObserverResult } from '@ngneat/query';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -19,6 +20,7 @@ import { BOList } from '../../utils/constants';
     standalone: true,
     imports: [
         CommonModule,
+        RouterLink,
         LucideAngularModule,
         GHMButtonComponent,
         GHMTableComponent,
@@ -45,7 +47,7 @@ export class MatchesPage {
 
     bestOfList: IBestOf[] = BOList;
 
-    constructor() {
+    constructor(private router: Router) {
         this.matches = this.api.getMatches().result;
         this.teams = this.api.getTeams().result;
     }
@@ -89,6 +91,10 @@ export class MatchesPage {
             bestOf: Number(this.bestOf) || 1
         });
         this.closeModal();
+    };
+
+    detail = (match: IMatchResponse) => {
+        this.router.navigate(['/matches', match.id]);
     };
 
     remove = (match: any) => {

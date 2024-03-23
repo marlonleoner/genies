@@ -22,8 +22,8 @@
                 <th style="width: 25%">Match</th>
                 <th style="width: 25%">Score</th>
                 <th style="width: 20%">Type</th>
-                <th style="width: 20%">Date</th>
-                <th style="width: 10%"></th>
+                <th style="width: 18%">Date</th>
+                <th style="width: 12%"></th>
             </tr>
         </ng-template>
         <ng-template #tbBodyTemplate let-match>
@@ -61,15 +61,15 @@
                 <td style="width: 20%">
                     <div class="flex items-center">Best of {{ match.bestOf }}</div>
                 </td>
-                <td style="width: 20%">
+                <td style="width: 18%">
                     <div class="flex items-center">{{ match.startTime }}</div>
                 </td>
-                <td style="width: 10%">
-                    <div class="flex items-center">
+                <td style="width: 12%">
+                    <div class="flex items-center justify-center">
                         <button type="button" class="p-2 group" (click)="setLive(match)" [disabled]="match.live">
                             <lucide-icon name="radio" class="size-4 group group-disabled:opacity-40"></lucide-icon>
                         </button>
-                        <button type="button" class="p-2" (click)="openModal('update', match)">
+                        <button type="button" class="p-2" (click)="detail(match)">
                             <lucide-icon name="pencil" class="size-4"></lucide-icon>
                         </button>
                         <button type="button" class="p-2" (click)="remove(match)">
