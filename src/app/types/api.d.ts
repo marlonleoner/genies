@@ -17,4 +17,6 @@ export interface IPlayerResponse {
     team: ITeamResponse;
 }
 
-export interface IMatchResponse {}
+export interface IMatchResponse {
+    id: string;
+}
