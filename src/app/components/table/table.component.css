@@ -4,7 +4,7 @@
 }
 
 :host ::ng-deep tbody > tr {
-    @apply h-16 bg-black-900 border-b border-b-black-600 hover:bg-black-800 transition-all duration-300;
+    @apply h-16 bg-transparent border-b border-b-black-600 hover:bg-black-900 transition-all duration-300;
 }
 
 :host ::ng-deep th,
