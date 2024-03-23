@@ -8,8 +8,13 @@ import { Component } from '@angular/core';
     styleUrl: './huds.page.css'
 })
 export class HudsPage {
+    private ipcRenderer?: any;
+
+    constructor() {
+        this.ipcRenderer = <any>window.require('electron/renderer').ipcRenderer;
+    }
+
     openDevHud = () => {
-        const w = <any>window.require('electron/renderer').ipcRenderer;
-        w.send('open-hud');
+        this.ipcRenderer?.send('open-hud', 'development');
     };
 }
