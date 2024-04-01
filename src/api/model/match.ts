@@ -26,6 +26,9 @@ export class Match {
     @JoinColumn()
     team1?: Team | null;
 
+    @Column({ default: 0 })
+    team1Score!: number;
+
     @ManyToOne(() => Team, (team) => team.matches, {
         nullable: true,
         onUpdate: 'CASCADE',
@@ -33,6 +36,9 @@ export class Match {
     })
     @JoinColumn()
     team2?: Team;
+
+    @Column({ default: 0 })
+    team2Score!: number;
 
     @CreateDateColumn({ select: false, default: () => 'CURRENT_TIMESTAMP' })
     createdAt!: Date;

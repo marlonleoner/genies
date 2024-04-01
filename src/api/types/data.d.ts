@@ -13,6 +13,7 @@ interface IData {
 interface IMap {
     name: string;
     phase: MapPhase;
+    numMapsMustWin: number;
 }
 
 interface IBomb {

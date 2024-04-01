@@ -16,8 +16,7 @@ export class GsiController {
 
     config = (request: Request, response: Response, next: NextFunction) => {
         try {
-            const { reversed } = request.query;
-            this.gsiService.config(Boolean(reversed));
+            this.gsiService.config();
             return response.end();
         } catch (error) {
             return next(error);
