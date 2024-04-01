@@ -1,0 +1,23 @@
+:host {
+    @apply w-full h-12 flex items-center justify-center;
+}
+
+:host > div {
+    @apply basis-full flex justify-center gap-1;
+}
+
+:host > div:last-child {
+    @apply text-white-500 text-sm;
+}
+
+button {
+    @apply size-9 rounded-lg flex items-center justify-center text-white-50 border-2 border-transparent hover:border-koromiko-300 hover:text-primary-200;
+}
+
+button:disabled {
+    @apply text-white-900 bg-transparent border-transparent;
+}
+
+button.active {
+    @apply bg-transparent border-koromiko-300 text-primary-200;
+}
