@@ -2,7 +2,6 @@ import { GSIEvents } from '../../util/constants';
 import { logger } from '../config/logger';
 import { GlobalEmitter } from '../lib/emitter';
 import { Player } from '../model/player';
-import { Team } from '../model/team';
 import { BombSites, RoundPhase, RoundWinType, SideTeam } from '../types/common';
 import {
     IBomb,
@@ -67,11 +66,11 @@ export class GsiService {
     /**
      *
      */
-    private team1?: Team;
+    private team1?: any;
     /**
      *
      */
-    private team2?: Team;
+    private team2?: any;
     /**
      *
      */
@@ -90,6 +89,10 @@ export class GsiService {
             damage: number;
         }[];
     }[] = [];
+    /**
+     *
+     */
+    private reversed: Boolean = false;
 
     private matchService: MatchService;
 
@@ -103,7 +106,8 @@ export class GsiService {
     private parseMap = (map: GSIMap): IMap => {
         return {
             name: map.name,
-            phase: map.phase
+            phase: map.phase,
+            numMapsMustWin: map.num_matches_to_win_series
         };
     };
 
@@ -210,6 +214,8 @@ export class GsiService {
         const stats = this.parsePlayerStats(player.match_stats);
         const weapons = this.parseWeapons(player.weapons);
 
+        const extensionAvatar = extension?.avatar ? `http://localhost:6779/api/files/image/${extension.avatar}` : null;
+
         return {
             id: extension?.id || null,
             steamId,
@@ -217,7 +223,7 @@ export class GsiService {
             name: extension?.firstName?.concat(' ').concat(extension?.lastName || '') || null,
             nickname: player.name,
             country: extension?.country || null,
-            avatar: extension?.avatar || null,
+            avatar: extensionAvatar,
             slot: player.observer_slot,
             side: player.team,
             state,
@@ -287,14 +293,14 @@ export class GsiService {
             isCTLeft ? 'L' : 'R',
             isCTLeft ? teamCT : teamT,
             isCTLeft ? playersCT : playersT,
-            isCTLeft ? this.team1 : this.team2
+            this.team1
         );
         const team2 = this.parseTeam(
             isCTLeft ? 'T' : 'CT',
             isCTLeft ? 'R' : 'L',
             isCTLeft ? teamT : teamCT,
             isCTLeft ? playersT : playersCT,
-            isCTLeft ? this.team2 : this.team1
+            this.team2
         );
 
         return { team1, team2 };
@@ -322,7 +328,7 @@ export class GsiService {
         logo: extension?.logo || null,
         country: extension?.country || null,
         score: team.score,
-        serieScore: team.matches_won_this_series,
+        serieScore: extension?.score || team.matches_won_this_series,
         lossBonus: team.consecutive_round_losses,
         timeoutsRemaining: team.timeouts_remaining,
         players
@@ -532,16 +538,23 @@ export class GsiService {
         GlobalEmitter.emit(GSIEvents['DATA'], data);
     };
 
-    config = async (reversed: boolean) => {
-        console.log(reversed);
-
+    config = async () => {
         try {
-            const { team1, team2 } = await this.matchService.getLive();
-            this.team1 = (reversed ? team1 : team2) || undefined;
-            this.team2 = (reversed ? team2 : team1) || undefined;
             if (this.steamIds) this.players = await this.playerService.getManyBySteamId(this.steamIds);
+
+            const { team1, team1Score, team2, team2Score } = await this.matchService.getLive();
+            this.reversed = !this.reversed;
+            this.team1 = {
+                ...((this.reversed ? team1 : team2) || undefined),
+                score: team1Score
+            };
+            this.team2 = {
+                ...((this.reversed ? team2 : team1) || undefined),
+                score: team2Score
+            };
         } catch (error) {
-            console.log('error', error);
+            this.team1 = undefined;
+            this.team2 = undefined;
         }
     };
 }
