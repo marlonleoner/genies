@@ -40,16 +40,16 @@
                     </div>
                 </td>
                 <td style="width: 25%">
-                    <div class="flex items-center">
+                    <div class="flex items-center font-bold">
                         <img
                             *ngIf="match.team1 && match.team1.logo"
                             class="size-6 m-2 object-contain"
                             src="http://localhost:6779/api/files/image/{{ match.team1.logo }}"
                             alt="{{ match.team1.name }}'s Logo"
                         />
-                        <span>0</span>
-                        <strong class="m-2">VS</strong>
-                        <span>0</span>
+                        <span>{{ match.team1Score }}</span>
+                        <span class="m-2">VS</span>
+                        <span>{{ match.team2Score }}</span>
                         <img
                             *ngIf="match.team2 && match.team2.logo"
                             class="size-6 m-2 object-contain"
