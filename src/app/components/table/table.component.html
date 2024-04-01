@@ -1,17 +1,21 @@
-<table class="w-full h-full">
-    <thead class="text-white-400 text-xs uppercase tracking-tighter bg-black-700">
-        <ng-container *ngTemplateOutlet="tbHeader"></ng-container>
-    </thead>
-    <tbody>
-        <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="itemsInScreen">
-            <ng-container *ngTemplateOutlet="tbBody; context: { $implicit: rowData, index: rowIndex }"></ng-container>
-        </ng-template>
-    </tbody>
-</table>
+<div class="w-full h-full flex flex-col justify-between">
+    <table class="w-full">
+        <thead class="text-white-400 text-xs uppercase tracking-tighter bg-black-700">
+            <ng-container *ngTemplateOutlet="tbHeader"></ng-container>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="itemsInScreen">
+                <ng-container
+                    *ngTemplateOutlet="tbBody; context: { $implicit: rowData, index: rowIndex }"
+                ></ng-container>
+            </ng-template>
+        </tbody>
+    </table>
 
-<!-- <hud-manager-paginator
-    [totalRecords]="values.length"
-    [visibleRows]="rows"
-    [visiblePages]="3"
-    (onChangePage)="cbChangePage($event)"
-></hud-manager-paginator> -->
+    <genieshm-paginator
+        [totalRecords]="values.length"
+        [visibleRows]="rows"
+        [visiblePages]="3"
+        (onChangePage)="cbChangePage($event)"
+    ></genieshm-paginator>
+</div>

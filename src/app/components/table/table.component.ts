@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ContentChildren, Input, QueryList, SimpleChanges, TemplateRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { GHMPaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
     selector: 'genieshm-table',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule, GHMPaginatorComponent],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })

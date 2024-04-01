@@ -1,10 +1,14 @@
+:host {
+    @apply grow;
+}
+
 :host ::ng-deep tr,
 :host ::ng-deep tr {
     @apply w-full flex items-center;
 }
 
 :host ::ng-deep tbody > tr {
-    @apply h-16 bg-transparent border-b border-b-black-600 hover:bg-black-900 transition-all duration-300;
+    @apply h-[4.6rem] 2xl:h-20 bg-transparent border-b border-b-black-600 hover:bg-black-900 transition-all duration-300;
 }
 
 :host ::ng-deep th,
